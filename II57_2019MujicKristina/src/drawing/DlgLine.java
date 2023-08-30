@@ -1,9 +1,11 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -26,8 +28,26 @@ public class DlgLine extends JDialog {
 	private JTextField txtXEnd;
 	private JTextField txtYEnd;
 	public boolean isOk;
+	private Color outline = Color.black;
+	private boolean outlineBool;
 	
 	//GET I SET
+	public Color getOutline() {
+		return outline;
+	}
+
+	public void setOutline(Color outline) {
+		this.outline = outline;
+	}
+
+	public boolean isOutlineBool() {
+		return outlineBool;
+	}
+
+	public void setOutlineBool(boolean outlineBool) {
+		this.outlineBool = outlineBool;
+	}
+	
 	public JTextField getTxtXStart() {
 		return txtXStart;
 	}
@@ -144,6 +164,14 @@ public class DlgLine extends JDialog {
 		});
 		txtYEnd.setColumns(10);
 		
+		JButton btnOutlineColor = new JButton("Outline color");
+		btnOutlineColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				outline = JColorChooser.showDialog(null, "Chose a color", Color.BLACK);
+				outlineBool = true;
+			}
+		});
+		
 		
 		GroupLayout gl_pnlCenter = new GroupLayout(pnlCenter);
 		gl_pnlCenter.setHorizontalGroup(
@@ -151,17 +179,20 @@ public class DlgLine extends JDialog {
 				.addGroup(gl_pnlCenter.createSequentialGroup()
 					.addGap(34)
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblXStart)
-						.addComponent(lblYStart)
-						.addComponent(lblXEnd)
-						.addComponent(lblYEnd))
-					.addGap(47)
-					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtYEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtXEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtYStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtXStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(221, Short.MAX_VALUE))
+						.addComponent(btnOutlineColor)
+						.addGroup(gl_pnlCenter.createSequentialGroup()
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblXStart)
+								.addComponent(lblYStart)
+								.addComponent(lblXEnd)
+								.addComponent(lblYEnd))
+							.addGap(47)
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtYEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtXEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtYStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtXStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(92, Short.MAX_VALUE))
 		);
 		gl_pnlCenter.setVerticalGroup(
 			gl_pnlCenter.createParallelGroup(Alignment.LEADING)
@@ -182,7 +213,9 @@ public class DlgLine extends JDialog {
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblYEnd)
 						.addComponent(txtYEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(76, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnOutlineColor)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		pnlCenter.setLayout(gl_pnlCenter);
 		{
@@ -215,6 +248,12 @@ public class DlgLine extends JDialog {
                             				(Integer.parseInt(txtXEnd.getText()),
                             				Integer.parseInt(txtYEnd.getText())));
                             	}
+                            	
+                            	if(outlineBool == true) {
+                                	shape.setOutline(outline);
+                                	outlineBool = false;
+                            	}
+                            
                             }
                         }
                         dispose();

@@ -1,9 +1,11 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -27,8 +29,45 @@ public class DlgCircle extends JDialog {
 	private JTextField txtYCoord;
 	private JTextField txtRadius;
 	
+	private Color outline = Color.black;
+	private Color fill = Color.white;
+	private boolean outlineBool;
+	private boolean fillBool;
+	
 	
 	//GET I SET
+	public Color getOutline() {
+		return outline;
+	}
+
+	public void setOutline(Color outline) {
+		this.outline = outline;
+	}
+
+	public Color getFill() {
+		return fill;
+	}
+
+	public void setFill(Color fill) {
+		this.fill = fill;
+	}
+
+	public boolean isOutlineBool() {
+		return outlineBool;
+	}
+
+	public void setOutlineBool(boolean outlineBool) {
+		this.outlineBool = outlineBool;
+	}
+
+	public boolean isFillBool() {
+		return fillBool;
+	}
+
+	public void setFillBool(boolean fillBool) {
+		this.fillBool = fillBool;
+	}
+	
 	public JTextField getTxtXCoord() {
 		return txtXCoord;
 	}
@@ -75,7 +114,7 @@ public class DlgCircle extends JDialog {
 		
 		
 		
-		setBounds(100, 100, 285, 300);
+		setBounds(100, 100, 285, 318);
 		getContentPane().setLayout(new BorderLayout());
 		pnlCenter.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
@@ -129,6 +168,22 @@ public class DlgCircle extends JDialog {
 		});
 		txtRadius.setColumns(10);
 		
+		JButton btnOutlineColor = new JButton("Outline color");
+		btnOutlineColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				outline = JColorChooser.showDialog(null, "Chose a color", Color.BLACK);
+				outlineBool = true;
+			}
+		});
+		
+		JButton btnFillColor = new JButton("Fill color");
+		btnFillColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fill = JColorChooser.showDialog(null, "Chose a color", Color.WHITE);
+				fillBool = true;
+			}
+		});
+		
 		
 		
 		GroupLayout gl_pnlCenter = new GroupLayout(pnlCenter);
@@ -137,15 +192,20 @@ public class DlgCircle extends JDialog {
 				.addGroup(gl_pnlCenter.createSequentialGroup()
 					.addGap(32)
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblXCoord)
-						.addComponent(lblYCoord)
-						.addComponent(lblRadius))
-					.addGap(36)
-					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(111, Short.MAX_VALUE))
+						.addGroup(gl_pnlCenter.createSequentialGroup()
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblXCoord)
+								.addComponent(lblYCoord)
+								.addComponent(lblRadius))
+							.addGap(36)
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_pnlCenter.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(btnFillColor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnOutlineColor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap(41, Short.MAX_VALUE))
 		);
 		gl_pnlCenter.setVerticalGroup(
 			gl_pnlCenter.createParallelGroup(Alignment.LEADING)
@@ -162,7 +222,11 @@ public class DlgCircle extends JDialog {
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblRadius)
 						.addComponent(txtRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(95, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnOutlineColor)
+					.addGap(18)
+					.addComponent(btnFillColor)
+					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		pnlCenter.setLayout(gl_pnlCenter);
 		{
@@ -189,7 +253,16 @@ public class DlgCircle extends JDialog {
                         					Integer.parseInt(txtYCoord.getText()));
                         			
                         			((Circle)shape).setRadius(Integer.parseInt(txtRadius.getText()));
-                        		}
+                        		}	
+                        		if(isOutlineBool()) {
+                            		shape.setOutline(outline);
+                            		setOutlineBool(false);
+                            	}
+                            	if(isFillBool()) {
+                            		shape.setFill(fill);
+                            		setFillBool(false);
+                            	}
+                        		
                         	}
                         	
                             isOk=true;
@@ -216,5 +289,7 @@ public class DlgCircle extends JDialog {
 			}
 		}
 	}
+
+	
 
 }

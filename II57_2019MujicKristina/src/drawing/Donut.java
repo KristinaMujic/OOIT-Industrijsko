@@ -71,8 +71,8 @@ public class Donut extends Circle {
 	}
 	
 	@Override
-	public void AreaPinter(Graphics g) {
-		super.AreaPinter(g);
+	public void AreaPainter(Graphics g) {
+		super.AreaPainter(g);
 		g.setColor(getFill());
 		g.fillRect(this.getCenter().getX() - this.getInnerRadius(), 
 				this.getCenter().getY() - this.getInnerRadius(), 

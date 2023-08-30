@@ -25,6 +25,7 @@ public class DrawFrm extends JFrame {
 
 	static Color outline = Color.BLACK;
 	static Color area = Color.WHITE;
+	public static Color fill;
 	
 	
 	/**
@@ -132,10 +133,42 @@ public class DrawFrm extends JFrame {
 				}
 			}
 		});
+	
 		
 		JButton btnModify = new JButton("Modify");
+		btnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        for (Shape shape : PnlDrawing.shapesArrList) {
+		            if (shape.isSelected()) {
+		                shape.DialogEdit();
+		                repaint();
+		                return;
+		            }
+		        }
+		        JOptionPane.showMessageDialog(null, "Please select an object to modify", "Error", JOptionPane.INFORMATION_MESSAGE);
+		    }
+		});
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(PnlDrawing.shapesArrList.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Nothing to delete!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				for (Shape shape : PnlDrawing.shapesArrList) {
+					if(shape.isSelected()) {
+						int ans = JOptionPane.showConfirmDialog(null, "Are you sure tou want to delete the selected object?", 
+								"Warning", JOptionPane.YES_NO_OPTION);
+					if(ans == 0) {
+						PnlDrawing.shapesArrList.remove(shape);
+					}
+					return;
+					}
+				}
+				JOptionPane.showMessageDialog(null,  "Please select an object", "Error", JOptionPane.INFORMATION_MESSAGE);;
+			}
+		});
 		
 		JButton btnOutlineColor = new JButton("Outline Color");
 		btnOutlineColor.addActionListener(new ActionListener() {

@@ -98,13 +98,14 @@ public class Circle extends Shape {
 		dlgLCircle.setVisible(true);
 	}
 	@Override
-	public void AreaPinter(Graphics g) {
+	public void AreaPainter(Graphics g) {
 		g.setColor(getFill());
 		g.fillOval(this.getCenter().getX() - this.getRadius(),
 				this.getCenter().getY() - this.getRadius(), 
 				this.getRadius() * 2, 
 				this.getRadius() * 2);
 	}
+	
 	
 	
 	

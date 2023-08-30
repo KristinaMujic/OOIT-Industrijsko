@@ -1,9 +1,11 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,8 +26,27 @@ public class DlgPoint extends JDialog {
 	private JTextField txtXCoord;
 	private JTextField txtYCoord;
 	public boolean isOk;
+	private Color outline = Color.black;
+	private boolean outlineBool;
+	
 	
 	//GET I SET
+	public Color getOutline() {
+		return outline;
+	}
+
+	public void setOutline(Color outline) {
+		this.outline = outline;
+	}
+
+	public boolean isOutlineBool() {
+		return outlineBool;
+	}
+
+	public void setOutlineBool(boolean outlineBool) {
+		this.outlineBool = outlineBool;
+	}
+	
 	public JTextField getTxtXCoord() {
 		return txtXCoord;
 	}
@@ -101,6 +122,14 @@ public class DlgPoint extends JDialog {
 		});
 		txtYCoord.setColumns(10);
 		
+		JButton btnOutlineColor = new JButton("Outline color");
+		btnOutlineColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				outline = JColorChooser.showDialog(null, "Chose a color", Color.BLACK);
+				outlineBool = true;
+			}
+		});
+		
 		
 		GroupLayout gl_pnlCenter = new GroupLayout(pnlCenter);
 		gl_pnlCenter.setHorizontalGroup(
@@ -108,13 +137,16 @@ public class DlgPoint extends JDialog {
 				.addGroup(gl_pnlCenter.createSequentialGroup()
 					.addGap(27)
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblXCoord)
-						.addComponent(lblYCoord))
-					.addGap(54)
-					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(112, Short.MAX_VALUE))
+						.addComponent(btnOutlineColor)
+						.addGroup(gl_pnlCenter.createSequentialGroup()
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblXCoord)
+								.addComponent(lblYCoord))
+							.addGap(54)
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(57, Short.MAX_VALUE))
 		);
 		gl_pnlCenter.setVerticalGroup(
 			gl_pnlCenter.createParallelGroup(Alignment.LEADING)
@@ -127,7 +159,9 @@ public class DlgPoint extends JDialog {
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblYCoord))
-					.addContainerGap(114, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnOutlineColor)
+					.addContainerGap(83, Short.MAX_VALUE))
 		);
 		pnlCenter.setLayout(gl_pnlCenter);
 		{
@@ -153,6 +187,11 @@ public class DlgPoint extends JDialog {
                             	if(shape.isSelected()) {
                             		shape.move(Integer.parseInt((txtXCoord).getText()),
                             				Integer.parseInt(txtYCoord.getText()));
+                            	}
+                            	
+                            	if(outlineBool == true) {
+                            		shape.setOutline(outline);
+                            		outlineBool = false;
                             	}
                             }
                         }
@@ -183,4 +222,5 @@ public class DlgPoint extends JDialog {
 		}
 	}
 
+	
 }

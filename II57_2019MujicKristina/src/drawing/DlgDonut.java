@@ -1,9 +1,11 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -27,10 +29,48 @@ public class DlgDonut extends JDialog {
 	private JTextField txtYCoord;
 	private JTextField txtRadius;
 	private JTextField txtInnerRadius;
+	
+	private Color outline = Color.black;
+	private Color fill = Color.white;
+	private boolean outlineBool;
+	private boolean fillBool;
+	
 
 	
 	
 	//GET I SET
+	public Color getOutline() {
+		return outline;
+	}
+
+	public void setOutline(Color outline) {
+		this.outline = outline;
+	}
+
+	public Color getFill() {
+		return fill;
+	}
+
+	public void setFill(Color fill) {
+		this.fill = fill;
+	}
+
+	public boolean isOutlineBool() {
+		return outlineBool;
+	}
+
+	public void setOutlineBool(boolean outlineBool) {
+		this.outlineBool = outlineBool;
+	}
+
+	public boolean isFillBool() {
+		return fillBool;
+	}
+
+	public void setFillBool(boolean fillBool) {
+		this.fillBool = fillBool;
+	}
+	
 	public JTextField getTxtXCoord() {
 		return txtXCoord;
 	}
@@ -85,7 +125,7 @@ public class DlgDonut extends JDialog {
 		
 		
 		
-		setBounds(100, 100, 305, 300);
+		setBounds(100, 100, 305, 339);
 		getContentPane().setLayout(new BorderLayout());
 		pnlCenter.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
@@ -149,6 +189,22 @@ public class DlgDonut extends JDialog {
 		});
 		txtInnerRadius.setColumns(10);
 		
+		JButton btnOutlineColor = new JButton("Outline color");
+		btnOutlineColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				outline = JColorChooser.showDialog(null, "Chose a color", Color.BLACK);
+				outlineBool = true;
+			}
+		});
+		
+		JButton btnFillColor = new JButton("Fill color");
+		btnFillColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fill = JColorChooser.showDialog(null, "Chose a color", Color.WHITE);
+				fillBool = true;
+			}
+		});
+		
 		
 		
 		GroupLayout gl_pnlCenter = new GroupLayout(pnlCenter);
@@ -157,17 +213,22 @@ public class DlgDonut extends JDialog {
 				.addGroup(gl_pnlCenter.createSequentialGroup()
 					.addGap(28)
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblXCoord)
-						.addComponent(lbYCoord)
-						.addComponent(lblRadius)
-						.addComponent(lblInnerRadius))
-					.addGap(35)
-					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtInnerRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(131, Short.MAX_VALUE))
+						.addGroup(gl_pnlCenter.createSequentialGroup()
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblXCoord)
+								.addComponent(lbYCoord)
+								.addComponent(lblRadius)
+								.addComponent(lblInnerRadius))
+							.addGap(35)
+							.addGroup(gl_pnlCenter.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtInnerRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtYCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtXCoord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_pnlCenter.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(btnFillColor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnOutlineColor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap(66, Short.MAX_VALUE))
 		);
 		gl_pnlCenter.setVerticalGroup(
 			gl_pnlCenter.createParallelGroup(Alignment.LEADING)
@@ -188,7 +249,11 @@ public class DlgDonut extends JDialog {
 					.addGroup(gl_pnlCenter.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblInnerRadius)
 						.addComponent(txtInnerRadius, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(78, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnOutlineColor)
+					.addGap(18)
+					.addComponent(btnFillColor)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		pnlCenter.setLayout(gl_pnlCenter);
 		{
@@ -220,6 +285,17 @@ public class DlgDonut extends JDialog {
                         				((Donut)shape).setRadius(Integer.parseInt(txtRadius.getText()));
                         				((Donut)shape).setInnerRadius(Integer.parseInt(txtInnerRadius.getText()));
                         			}
+                        			
+                        			if(isOutlineBool()) {
+                                    	shape.setOutline(outline);
+                                    	setOutlineBool(false);
+                                    }
+                        			
+                                    if(isFillBool()) {
+                                    	shape.setFill(fill);
+                                    	setFillBool(false);	
+                                    }
+                                    
                         		}
                         			isOk=true;
                         			dispose();
@@ -249,5 +325,7 @@ public class DlgDonut extends JDialog {
 			}
 		}
 	}
+
+	
 
 }

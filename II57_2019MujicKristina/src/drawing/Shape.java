@@ -10,7 +10,7 @@ public abstract class Shape implements Comparable, Moveable {
 	
 	private Color outline = Color.black;
 	private Color fill = Color.white;
-	public abstract void AreaPinter(Graphics g);
+	public abstract void AreaPainter(Graphics g);
 	
 	public abstract boolean contains(int x, int y);
 	public abstract void draw(Graphics g);
@@ -56,6 +56,10 @@ public abstract class Shape implements Comparable, Moveable {
 		super();
 		this.selected = selected;
 	}
+
+	
+
+	
 
 	
 	

@@ -49,12 +49,13 @@ public class PnlDrawing  extends JPanel implements MouseListener {
                 }
                 break;
 			case 3:
-	            DlgRectangle dlgRectangle = new DlgRectangle();
+				DlgRectangle dlgRectangle = new DlgRectangle();
 	            dlgRectangle.getTxtXCoord().setText(String.valueOf(mx));
 	            dlgRectangle.getTxtXCoord().setEditable(false);
 	            dlgRectangle.getTxtYCoord().setText(String.valueOf(my));
 	            dlgRectangle.getTxtYCoord().setEditable(false);
 	            dlgRectangle.setVisible(true);
+	            
 	            if (dlgRectangle.isOk) {
 	            	Rectangle r = new Rectangle(new Point(mx,my),
 							Integer.parseInt(dlgRectangle.getTxtWidth().getText()),
@@ -64,8 +65,17 @@ public class PnlDrawing  extends JPanel implements MouseListener {
 	            	r.setFill(DrawFrm.area);
 						System.out.println(r);
 						shapesArrList.add(r);
+						
+				if(dlgRectangle.isOutlineBool()) {
+						r.setOutline(dlgRectangle.getOutline());
 				}
-				break;
+				
+				if(dlgRectangle.isFillBool()) {
+						r.setFill(dlgRectangle.getFill());
+				}
+				
+			    }
+			    break;
 			case 4:
 				DlgCircle dlgCircle = new DlgCircle();
 				dlgCircle.getTxtXCoord().setText(String.valueOf(mx));
@@ -77,8 +87,19 @@ public class PnlDrawing  extends JPanel implements MouseListener {
 	            	Circle c = new Circle(new Point(mx,my),
 							Integer.parseInt(dlgCircle.getTxtRadius().getText()),
 							false);
-						System.out.println(c);
+	            	c.setOutline(DrawFrm.outline);
+	            	c.setFill(DrawFrm.fill);
+						//System.out.println(c);
 						shapesArrList.add(c);
+						
+				if(dlgCircle.isOutlineBool()) {
+						c.setOutline(dlgCircle.getOutline());
+				}
+						
+				if(dlgCircle.isFillBool()) {
+						c.setFill(dlgCircle.getFill());
+				}
+				
 				}
 				break;
 			case 5:
@@ -94,7 +115,16 @@ public class PnlDrawing  extends JPanel implements MouseListener {
 	            			Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()),
 	            			false);
 	            	shapesArrList.add(d);
+	            	
+	            if(dlgDonut.isOutlineBool()) {
+						d.setOutline(dlgDonut.getOutline());
+				}
+					
+				if(dlgDonut.isFillBool()) {
+						d.setFill(dlgDonut.getFill());
+				}
 	            }
+	            
 				break;
 			case 6:
 				boolean match = false;
@@ -103,6 +133,7 @@ public class PnlDrawing  extends JPanel implements MouseListener {
 					shape.setSelected(false);
 					if(match == false) {
 						if(shape.contains(mx, my)) {
+							shape.setSelected(true);
 							match = true;
 						}
 					}
@@ -111,16 +142,17 @@ public class PnlDrawing  extends JPanel implements MouseListener {
 				break;
 				
 	    }
-	    //repaint();
+	    repaint();
 	}
 	            
-	          public void paint(Graphics g) {
-	        		super.paint(g);
-	        		for (Shape shape : shapesArrList) {
-	        			shape.draw(g);
-	        		}
-	        		repaint();
-	        	}
+	    public void paint(Graphics g) {
+	        super.paint(g);
+	        for (Shape shape : shapesArrList) {
+	        	shape.AreaPainter(g);
+	        		shape.draw(g);
+	        }
+	        repaint();
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {

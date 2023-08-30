@@ -9,11 +9,11 @@ public class Rectangle extends Shape {
 	private Point upperLeftPoint;
 	private int width;
 	private int height;
-	
+
 	public int area() {
 		return width*height;
 	}
-	
+
 	//get i set metode
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
@@ -33,24 +33,24 @@ public class Rectangle extends Shape {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
-	
-	
+
+
+
 	//konstruktori
 	public Rectangle() {
 	}
-	
+
 	public Rectangle(Point upperLeftPoint, int width, int height) {
 		this.upperLeftPoint = upperLeftPoint;
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
 		this(upperLeftPoint, width, height);
 		setSelected(selected);
 	}
-	
+
 	//tekst na konzoli
 	public String toString() {
         return "Rectangle [ulp= " + upperLeftPoint + " , width= " + width + " , height= " + height + " , selected= " + isSelected() + "]";
@@ -79,11 +79,11 @@ public class Rectangle extends Shape {
 			//dole desno
 			g.drawRect(this.getUpperLeftPoint().getX() + this.getWidth()-3, this.getUpperLeftPoint().getY() + this.getHeight()-3, 6, 6); 
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	public boolean contains(int x, int y) {
@@ -96,7 +96,7 @@ public class Rectangle extends Shape {
 	@Override
 	public void move(int newX, int newY) {
 		upperLeftPoint.move(newX, newY);
-		
+
 	}
 
 	@Override
@@ -116,13 +116,13 @@ public class Rectangle extends Shape {
 	}
 
 	@Override
-	public void AreaPinter(Graphics g) {
+	public void AreaPainter(Graphics g) {
 		g.setColor(getFill());
 		g.fillRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.getWidth(), this.getHeight());
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

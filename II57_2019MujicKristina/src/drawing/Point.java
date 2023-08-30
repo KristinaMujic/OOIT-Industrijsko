@@ -51,6 +51,12 @@ public class Point extends Shape {
 	public int compareTo(Object o) {
 		return 0;
 	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(getOutline());
@@ -95,7 +101,7 @@ public class Point extends Shape {
 		
 	}
 	@Override
-	public void AreaPinter(Graphics g) {
+	public void AreaPainter(Graphics g) {
 	}
 	
 }

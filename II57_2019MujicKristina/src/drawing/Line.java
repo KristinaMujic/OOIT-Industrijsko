@@ -66,7 +66,7 @@ public class Line extends Shape {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(getOutline());
-		g.setColor(Color.black);
+		//g.setColor(Color.black);
 		g.drawLine(this.getStart().getX(), this.getStart().getY(), this.getEnd().getX(), this.getEnd().getY());
 		if(isSelected() == true) {
 			g.drawRect(this.getStart().getX()-3, this.getStart().getY()-3, 6, 6);
@@ -101,16 +101,18 @@ public class Line extends Shape {
 					String[] split = shape.toString().split(" ");
 					dlgLine.getTxtXStart().setText(split[4]);
 					dlgLine.getTxtYStart().setText(split[7]);
-					dlgLine.getTxtXEnd().setText(split[12]);
-					dlgLine.getTxtYEnd().setText(split[15]);
+					dlgLine.getTxtXEnd().setText(split[10]); 
+					dlgLine.getTxtYEnd().setText(split[13]);
 				}
 			}
 		dlgLine.setVisible(true);
  	}
 	@Override
-	public void AreaPinter(Graphics g) {
+	public void AreaPainter(Graphics g) {
+		// TODO Auto-generated method stub
 		
 	}
+	
 	
 	
 	
